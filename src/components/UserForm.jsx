@@ -83,7 +83,9 @@ export default function UserForm({ show, onClose, onSubmit, user }) {
       <Modal.Body>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="firstName">First Name</Label>
+            <Label htmlFor="firstName">
+              First Name <span className="text-red-500">*</span>
+            </Label>
             <TextInput
               id="firstName"
               name="firstName"
@@ -97,7 +99,9 @@ export default function UserForm({ show, onClose, onSubmit, user }) {
             )}
           </div>
           <div>
-            <Label htmlFor="lastName">Last Name</Label>
+            <Label htmlFor="lastName">
+              Last Name <span className="text-red-500">*</span>
+            </Label>
             <TextInput
               id="lastName"
               name="lastName"
@@ -111,7 +115,9 @@ export default function UserForm({ show, onClose, onSubmit, user }) {
             )}
           </div>
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">
+              Email <span className="text-red-500">*</span>
+            </Label>
             <TextInput
               id="email"
               name="email"
@@ -126,7 +132,9 @@ export default function UserForm({ show, onClose, onSubmit, user }) {
             )}
           </div>
           <div>
-            <Label htmlFor="department">Department</Label>
+            <Label htmlFor="department">
+              Department <span className="text-red-500">*</span>
+            </Label>
             <Select
               id="department"
               name="department"
