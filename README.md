@@ -29,7 +29,7 @@ This is a **User Management System** built with React, Flowbite UI, and Vite. It
 1️⃣ **Clone the Repository**
 
 ```sh
-git clone https://github.com/heyasif/user-json.git
+git clone https://github.com/heyasif/user-management.git
 cd user-json
 ```
 
@@ -67,12 +67,6 @@ npm run build
 
 - Push your changes to GitHub
 - Connect the repo to Netlify & deploy 🎉
-
-## ❌ Handling Errors
-
-- **TypeScript Errors?** Make sure you’re using `.jsx` files and not `.tsx`.
-- **Vite Build Issues?** Run `npm run clean && npm install`.
-- **White Screen on Load?** Check the API URL and Console Errors.
 
 ## 📜 License
 
