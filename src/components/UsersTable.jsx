@@ -1,86 +1,92 @@
-import React, { useState } from "react";
-import { Table } from "flowbite-react";
+import React, { useState, useEffect } from "react";
+import { Table, Avatar } from "flowbite-react";
 import { HiPencil, HiTrash } from "react-icons/hi";
-import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function UsersTable({ users, onEdit, onDelete }) {
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [loading, setLoading] = useState(true);
 
-  // Sorting function
-  const handleSort = (field) => {
-    const order = sortField === field && sortOrder === "asc" ? "desc" : "asc";
-    setSortField(field);
-    setSortOrder(order);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const sortedUsers = [...users].sort((a, b) => {
-    if (!sortField) return 0;
-    const valA = a[sortField].toLowerCase();
-    const valB = b[sortField].toLowerCase();
-
-    return sortOrder === "asc"
-      ? valA.localeCompare(valB)
-      : valB.localeCompare(valA);
-  });
-
-  // Get sorting icon
-  const getSortIcon = (field) => {
-    if (sortField !== field) return <FaSort />;
-    return sortOrder === "asc" ? <FaSortUp /> : <FaSortDown />;
-  };
+  if (loading) {
+    return (
+      <div className="overflow-x-auto">
+        <Table className="w-full bg-white text-left shadow-md">
+          <Table.Head>
+            <Table.HeadCell>ID</Table.HeadCell>
+            <Table.HeadCell>Avatar</Table.HeadCell>
+            <Table.HeadCell>Name</Table.HeadCell>
+            <Table.HeadCell>Email</Table.HeadCell>
+            <Table.HeadCell>Department</Table.HeadCell>
+            <Table.HeadCell>Actions</Table.HeadCell>
+          </Table.Head>
+          <Table.Body>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <Table.Row key={index} className="border-b">
+                <Table.Cell>
+                  <Skeleton width={30} />
+                </Table.Cell>
+                <Table.Cell>
+                  <Skeleton circle width={40} height={40} />
+                </Table.Cell>
+                <Table.Cell>
+                  <Skeleton width={120} />
+                </Table.Cell>
+                <Table.Cell>
+                  <Skeleton width={180} />
+                </Table.Cell>
+                <Table.Cell>
+                  <Skeleton width={150} />
+                </Table.Cell>
+                <Table.Cell className="flex gap-2">
+                  <Skeleton circle width={24} height={24} />
+                  <Skeleton circle width={24} height={24} />
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto">
-      <Table className="w-full rounded-lg bg-white text-left shadow-md">
+      <Table className="w-full bg-white text-left shadow-md">
         <Table.Head>
-          <Table.HeadCell
-            className="cursor-pointer"
-            onClick={() => handleSort("id")}
-          >
-            ID {getSortIcon("id")}
-          </Table.HeadCell>
+          <Table.HeadCell>ID</Table.HeadCell>
           <Table.HeadCell>Avatar</Table.HeadCell>
-          <Table.HeadCell
-            className="cursor-pointer"
-            onClick={() => handleSort("firstName")}
-          >
-            Name {getSortIcon("firstName")}
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="cursor-pointer"
-            onClick={() => handleSort("email")}
-          >
-            Email {getSortIcon("email")}
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="cursor-pointer"
-            onClick={() => handleSort("department")}
-          >
-            Department {getSortIcon("department")}
-          </Table.HeadCell>
+          <Table.HeadCell>Name</Table.HeadCell>
+          <Table.HeadCell>Email</Table.HeadCell>
+          <Table.HeadCell>Department</Table.HeadCell>
           <Table.HeadCell>Actions</Table.HeadCell>
         </Table.Head>
         <Table.Body>
-          {sortedUsers.map((user) => (
+          {users.map((user) => (
             <Table.Row key={user.id} className="border-b">
               <Table.Cell>{user.id}</Table.Cell>
               <Table.Cell>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-300 font-bold text-white">
-                  {user.firstName.charAt(0)}
-                  {user.lastName.charAt(0)}
-                </div>
+                <Avatar
+                  img={`https://ui-avatars.com/api/?name=${user.firstName}+${user.lastName}&background=random`}
+                  rounded
+                />
               </Table.Cell>
-              <Table.Cell>{`${user.firstName} ${user.lastName}`}</Table.Cell>
+              <Table.Cell>
+                {user.firstName} {user.lastName}
+              </Table.Cell>
               <Table.Cell>{user.email}</Table.Cell>
               <Table.Cell>{user.department}</Table.Cell>
-              <Table.Cell className="flex gap-4">
+              <Table.Cell className="flex gap-2">
                 <HiPencil
-                  className="cursor-pointer text-lg text-blue-600 transition-transform hover:scale-110"
+                  className="cursor-pointer text-blue-500 hover:text-blue-700"
                   onClick={() => onEdit(user)}
                 />
                 <HiTrash
-                  className="cursor-pointer text-lg text-red-600 transition-transform hover:scale-110"
+                  className="cursor-pointer text-red-500 hover:text-red-700"
                   onClick={() => onDelete(user.id)}
                 />
               </Table.Cell>

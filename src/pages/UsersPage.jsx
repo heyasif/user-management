@@ -124,7 +124,8 @@ export default function UsersPage() {
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   return (
-    <div className="min-h-screen w-full rounded-lg bg-gray-100 p-6 shadow-lg">
+    <>
+      {/* <div className="min-h-screen w-full rounded-lg bg-gray-100 p-6 shadow-lg"> */}
       <ToastContainer position="top-right" autoClose={3000} />
 
       {/* Header Section */}
@@ -180,9 +181,7 @@ export default function UsersPage() {
             />
           </>
         ) : (
-          <div className="flex min-h-[400px] items-center justify-center p-6">
-            <p className="text-lg text-gray-500">No results found.</p>
-          </div>
+          <p></p>
         )}
       </div>
 
@@ -212,6 +211,7 @@ export default function UsersPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+      {/* </div> */}
+    </>
   );
 }

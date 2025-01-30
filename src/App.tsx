@@ -8,11 +8,18 @@ import {
 import UsersPage from "./pages/UsersPage";
 import DashboardLayout from "./layouts/DashboardLayout";
 
+function NotFound() {
+  return (
+    <div className="flex h-screen items-center justify-center text-2xl text-gray-600">
+      404 - Page Not Found
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Automatically Redirect from / to /users */}
         <Route path="/" element={<Navigate to="/users" replace />} />
         <Route
           path="/users"
@@ -22,6 +29,7 @@ function App() {
             </DashboardLayout>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
